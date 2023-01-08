@@ -36,8 +36,7 @@ async def order(ctx):
     guild = ctx.guild
     # role = ctx.guild.roles
     # Finds the required roles needed in the guild
-    global inperson, online, Servus_award
-    Servus_award = discord.utils.find(lambda r: r.name == 'Servus-award', ctx.message.guild.roles)
+    global inperson, online
     inperson = discord.utils.find(lambda r: r.name == 'In-Person', ctx.message.guild.roles)
     online = discord.utils.find(lambda r: r.name == 'Online', ctx.message.guild.roles)
     
@@ -46,22 +45,25 @@ async def order(ctx):
     # print(teams_str)
 
     # initiating numbering for the teams
-    on_index = 1
-    in_index = 1
+    index = 1
+
 
     # initiating a dictionary that would be used when we need to call the next team up for judging
-    global online_dic, inperson_dic, Servus_dic, online_dic_list, inperson_dic_list
+    global dic, V, I, online_dic, inperson_dic, online_dic_list, inperson_dic_list
 
     online_dic = {}
-    Servus_dic = {}
     inperson_dic = {}
+    dic = {}
+    V = online.name
+    I = inperson.name
+
 
     if ctx.message.channel.name == "judging":
 
         # creating the online list
-        await ctx.send('**This is the list for the teams presenting online**')
+        await ctx.send('**This is the list for the teams presenting**')
         # printing the list for admin more nicely
-        await channel.send('**This is the list for the teams presenting online**')
+        await channel.send('**This is the list for the teams presenting**')
         for order, team in enumerate(teams_str):
             
             # using the string names to find the roles and store them in a list
@@ -69,6 +71,8 @@ async def order(ctx):
             print(teams_role)
 
             ONLINE = []
+            INPERSON = []
+            # if gthere are no memebers in team
             if len(teams_role.members) == 0:
                 pass
             else:
@@ -76,176 +80,185 @@ async def order(ctx):
                     # checks if member is online
                     if (online in member.roles):
                         ONLINE.append(member.name)
-                        # print(ONLINE)   
-                    else:
-                        pass
-            
-                # checking if all members of the team are online
-                if (len(ONLINE) == len(teams_role.members)):
-                    # adding the teams to the dictionary
-                    if (member.name in ONLINE):
-                        online_dic[f'{on_index}'] = f'{team}'
+                        dic[f'{team}'] = V
+                        print(f'{team} : {dic[team]}')
                         # sending the list to the channel
-                        await ctx.send(f'{on_index}. {team}')
+                        await ctx.send(f'{index}. {team}')
+                        index += 1
                         # printing the list for admin more nicely
-                        await channel.send(f'{on_index}. {team}')
-
-                    #incrementing the index for the next team
-                    on_index += 1
-
-        await ctx.send('** **')
-        #############################################################################################################################################
-
-        # creating the inperson list
-        await ctx.send('**This is the list for the teams presenting inperson**')
-        # printing the list for admin more nicely
-        await channel.send('** **')
-        await channel.send('**This is the list for the teams presenting inperson**')
-        for order, team in enumerate(teams_str):
-            
-            # using the string names to find the roles and store them in a list
-            teams_role = find(lambda r: r.name == f'{team}', ctx.message.guild.roles)
-            # print(teams_role)
-
-            INPERSON = []
-            if len(teams_role.members) == 0:
-                pass
-            else:
-                for member in teams_role.members:
-                    # checks if member is inperson
-                    if (inperson in member.roles):
-                        INPERSON.append(member.name)
-                        
+                        await channel.send(f'{team} : {dic[team]}')
+                        continue
+                    elif (inperson in member.roles):
+                        INPERSON.append(member.name)   
                     else:
                         pass
-                
+            
                 # checking if all members of the team are inperson
+                # if they are then the team is presenting INPERSON
                 if (len(INPERSON) == len(teams_role.members)):
                     # adding the teams to the dictionary                    
                     if (member.name in INPERSON):
-                        inperson_dic[f'{in_index}'] = f'{team}'
+                        dic[f'{team}'] = I
+                        print(f'{team} : {dic[team]}')
                         # sending the list to the channel
-                        await ctx.send(f'{in_index}. {team}')
+                        await ctx.send(f'{index}. {team}')
+                        index += 1
                         # printing the list for admin more nicely
-                        await channel.send(f'{in_index}. {team}')
-
-                    #incrementing the index for the next team
-                    in_index += 1    
+                        await channel.send(f'{team} : {dic[team]}')                        
+                        continue            
 
         await ctx.send('** **')
+        print(dic)
+        #############################################################################################################################################
+
+        # # creating the inperson list
+        # await ctx.send('**This is the list for the teams presenting inperson**')
+        # # printing the list for admin more nicely
+        # await channel.send('** **')
+        # await channel.send('**This is the list for the teams presenting inperson**')
+        # for order, team in enumerate(teams_str):
+            
+        #     # using the string names to find the roles and store them in a list
+        #     teams_role = find(lambda r: r.name == f'{team}', ctx.message.guild.roles)
+        #     # print(teams_role)
+
+        #     INPERSON = []
+        #     if len(teams_role.members) == 0:
+        #         pass
+        #     else:
+        #         for member in teams_role.members:
+        #             # checks if member is inperson
+        #             if (inperson in member.roles):
+        #                 INPERSON.append(member.name)
+                        
+        #             else:
+        #                 pass
+                
+        #         # checking if all members of the team are inperson
+        #         if (len(INPERSON) == len(teams_role.members)):
+        #             # adding the teams to the dictionary                    
+        #             if (member.name in INPERSON):
+        #                 inperson_dic[f'{in_index}'] = f'{team}'
+        #                 # sending the list to the channel
+        #                 await ctx.send(f'{in_index}. {team}')
+        #                 # printing the list for admin more nicely
+        #                 await channel.send(f'{in_index}. {team}')
+
+        #             #incrementing the index for the next team
+        #             in_index += 1    
+
+        # await ctx.send('** **')
         ########################################################################################################################################
 
-        # creating the Servus-award list
-        await ctx.send('**This is the list for the teams presenting for the Servus award**')
-        # printing the list for admin more nicely
-        await channel.send('** **')
-        await channel.send('**This is the list for the teams presenting for the Servus award**')
-        for order, team in enumerate(teams_str):
+        # # creating the Servus-award list
+        # await ctx.send('**This is the list for the teams presenting for the Servus award**')
+        # # printing the list for admin more nicely
+        # await channel.send('** **')
+        # await channel.send('**This is the list for the teams presenting for the Servus award**')
+        # for order, team in enumerate(teams_str):
             
-            # using the string names to find the roles and store them in a list
-            teams_role = find(lambda r: r.name == f'{team}', ctx.message.guild.roles)
-            # print(teams_role)
+        #     # using the string names to find the roles and store them in a list
+        #     teams_role = find(lambda r: r.name == f'{team}', ctx.message.guild.roles)
+        #     # print(teams_role)
 
-            Servus = []
-            if len(teams_role.members) == 0:
-                pass
-            else:
-                for member in teams_role.members:
-                    # checks if member is inperson
-                    if (Servus_award in member.roles):
-                        Servus.append(member.name)
+        #     Servus = []
+        #     if len(teams_role.members) == 0:
+        #         pass
+        #     else:
+        #         for member in teams_role.members:
+        #             # checks if member is inperson
+        #             if (Servus_award in member.roles):
+        #                 Servus.append(member.name)
                         
-                    else:
-                        pass
+        #             else:
+        #                 pass
                 
-                # checking if all members of the team are inperson
-                if (len(Servus) == len(teams_role.members)):
-                    # adding the teams to the dictionary                    
-                    if (member.name in Servus):
-                        Servus_dic[f'{in_index}'] = f'{team}'
-                        # sending the list to the channel
-                        await ctx.send(f'{in_index}. {team}')
-                        # printing the list for admin more nicely
-                        await channel.send(f'{in_index}. {team}')
+        #         # checking if all members of the team are inperson
+        #         if (len(Servus) == len(teams_role.members)):
+        #             # adding the teams to the dictionary                    
+        #             if (member.name in Servus):
+        #                 Servus_dic[f'{in_index}'] = f'{team}'
+        #                 # sending the list to the channel
+        #                 await ctx.send(f'{in_index}. {team}')
+        #                 # printing the list for admin more nicely
+        #                 await channel.send(f'{in_index}. {team}')
 
-                    #incrementing the index for the next team
-                    in_index += 1
+        #             #incrementing the index for the next team
+        #             in_index += 1
         
         
-        print(inperson_dic)
-        print(online_dic)
-        print(Servus_dic)
+        # print(inperson_dic)
+        # print(online_dic)
+        # print(Servus_dic)
 
-        # telling the teams first in both lines to get ready
-        online_dic_list = list(online_dic)
-        inperson_dic_list = list(inperson_dic)
-        Servus_dic_list = list(Servus_dic)
+        # # telling the teams first in both lines to get ready
+        # online_dic_list = list(online_dic)
+        # inperson_dic_list = list(inperson_dic)
+        # Servus_dic_list = list(Servus_dic)
+#################################################################################################################################################################################################################################################
+        # if len(online_dic) >= 5:
+        #     first_online = find(lambda r: r.name == f'{online_dic[online_dic_list[0]]}', ctx.message.guild.roles)
+        #     second_online = find (lambda r: r.name == f'{online_dic[online_dic_list[1]]}', ctx.message.guild.roles)
+        #     third_online = find (lambda r: r.name == f'{online_dic[online_dic_list[2]]}', ctx.message.guild.roles)
+        #     # fourth_online = find (lambda r: r.name == f'{online_dic[online_dic_list[3]]}', ctx.message.guild.roles)
+        #     # fifth_online = find (lambda r: r.name == f'{online_dic[online_dic_list[4]]}', ctx.message.guild.roles)
+        #     await ctx.send('** **')
+        #     await ctx.send(f'Hey {first_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 1 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 1.')
+        #     await ctx.send(f'Hey {second_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 2 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 2.')
+        #     await ctx.send(f'Hey {third_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 3 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 3.')
+        #     # await ctx.send(f'Hey {fourth_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 2 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 2.')
+        #     # await ctx.send(f'Hey {fifth_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 2 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 2.')
+        # elif len(online_dic) == 4:
+        #     first_online = find(lambda r: r.name == f'{online_dic[online_dic_list[0]]}', ctx.message.guild.roles)
+        #     second_online = find (lambda r: r.name == f'{online_dic[online_dic_list[1]]}', ctx.message.guild.roles)
+        #     third_online = find (lambda r: r.name == f'{online_dic[online_dic_list[2]]}', ctx.message.guild.roles)
+        #     # fourth_online = find (lambda r: r.name == f'{online_dic[online_dic_list[3]]}', ctx.message.guild.roles)
+        #     await ctx.send('** **')
+        #     await ctx.send(f'Hey {first_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 1 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 1.')
+        #     await ctx.send(f'Hey {second_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 2 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 2.')
+        #     await ctx.send(f'Hey {third_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 3 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 3.')
+        #     # await ctx.send(f'Hey {fourth_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 2 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 2.')
+        # elif len(online_dic) == 3:
+        #     first_online = find(lambda r: r.name == f'{online_dic[online_dic_list[0]]}', ctx.message.guild.roles)
+        #     second_online = find (lambda r: r.name == f'{online_dic[online_dic_list[1]]}', ctx.message.guild.roles)
+        #     third_online = find (lambda r: r.name == f'{online_dic[online_dic_list[2]]}', ctx.message.guild.roles)
+        #     await ctx.send('** **')
+        #     await ctx.send(f'Hey {first_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 1 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 1.')
+        #     await ctx.send(f'Hey {second_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 2 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 2.')
+        #     await ctx.send(f'Hey {third_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 3 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 3.')
+        # elif len(online_dic) == 2:
+        #     first_online = find(lambda r: r.name == f'{online_dic[online_dic_list[0]]}', ctx.message.guild.roles)
+        #     second_online = find (lambda r: r.name == f'{online_dic[online_dic_list[1]]}', ctx.message.guild.roles)
+        #     await ctx.send('** **')
+        #     await ctx.send(f'Hey {first_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 1 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 1.')
+        #     await ctx.send(f'Hey {second_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 2 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 2.')
 
-        if len(online_dic) >= 5:
-            first_online = find(lambda r: r.name == f'{online_dic[online_dic_list[0]]}', ctx.message.guild.roles)
-            second_online = find (lambda r: r.name == f'{online_dic[online_dic_list[1]]}', ctx.message.guild.roles)
-            third_online = find (lambda r: r.name == f'{online_dic[online_dic_list[2]]}', ctx.message.guild.roles)
-            # fourth_online = find (lambda r: r.name == f'{online_dic[online_dic_list[3]]}', ctx.message.guild.roles)
-            # fifth_online = find (lambda r: r.name == f'{online_dic[online_dic_list[4]]}', ctx.message.guild.roles)
-            await ctx.send('** **')
-            await ctx.send(f'Hey {first_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 1 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 1.')
-            await ctx.send(f'Hey {second_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 2 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 2.')
-            await ctx.send(f'Hey {third_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 3 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 3.')
-            # await ctx.send(f'Hey {fourth_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 2 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 2.')
-            # await ctx.send(f'Hey {fifth_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 2 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 2.')
-        elif len(online_dic) == 4:
-            first_online = find(lambda r: r.name == f'{online_dic[online_dic_list[0]]}', ctx.message.guild.roles)
-            second_online = find (lambda r: r.name == f'{online_dic[online_dic_list[1]]}', ctx.message.guild.roles)
-            third_online = find (lambda r: r.name == f'{online_dic[online_dic_list[2]]}', ctx.message.guild.roles)
-            # fourth_online = find (lambda r: r.name == f'{online_dic[online_dic_list[3]]}', ctx.message.guild.roles)
-            await ctx.send('** **')
-            await ctx.send(f'Hey {first_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 1 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 1.')
-            await ctx.send(f'Hey {second_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 2 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 2.')
-            await ctx.send(f'Hey {third_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 3 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 3.')
-            # await ctx.send(f'Hey {fourth_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 2 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 2.')
-        elif len(online_dic) == 3:
-            first_online = find(lambda r: r.name == f'{online_dic[online_dic_list[0]]}', ctx.message.guild.roles)
-            second_online = find (lambda r: r.name == f'{online_dic[online_dic_list[1]]}', ctx.message.guild.roles)
-            third_online = find (lambda r: r.name == f'{online_dic[online_dic_list[2]]}', ctx.message.guild.roles)
-            await ctx.send('** **')
-            await ctx.send(f'Hey {first_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 1 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 1.')
-            await ctx.send(f'Hey {second_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 2 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 2.')
-            await ctx.send(f'Hey {third_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 3 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 3.')
-        elif len(online_dic) == 2:
-            first_online = find(lambda r: r.name == f'{online_dic[online_dic_list[0]]}', ctx.message.guild.roles)
-            second_online = find (lambda r: r.name == f'{online_dic[online_dic_list[1]]}', ctx.message.guild.roles)
-            await ctx.send('** **')
-            await ctx.send(f'Hey {first_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 1 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 1.')
-            await ctx.send(f'Hey {second_online.mention}, your team is up next for judging, so get ready. Please head to the Judging waiting room 2 voice channel and wait till you are called up next. You will automatically be transferred to the Judging Room 2.')
 
-
-        if len(inperson_dic) >= 3:
-            first_inperson = find(lambda r: r.name == f'{inperson_dic[inperson_dic_list[0]]}', ctx.message.guild.roles)
-            second_inperson = find(lambda r: r.name == f'{inperson_dic[inperson_dic_list[1]]}', ctx.message.guild.roles)
-            # third_inperson = find(lambda r: r.name == f'{inperson_dic[inperson_dic_list[2]]}', ctx.message.guild.roles)
-            await ctx.send('** **')
-            await ctx.send(f'Hey {first_inperson.mention}, your team is up next for judging, so get ready. Please head to the front desk.')
-            await ctx.send(f'Hey {second_inperson.mention}, your team is up next for judging, so get ready. Please head to the front desk.')
-            # await ctx.send(f'Hey {third_inperson.mention}, your team is up next for judging, so get ready. Please head to the front desk.')
-        elif len(inperson_dic) == 2:
-            first_inperson = find(lambda r: r.name == f'{inperson_dic[inperson_dic_list[0]]}', ctx.message.guild.roles)
-            second_inperson = find(lambda r: r.name == f'{inperson_dic[inperson_dic_list[1]]}', ctx.message.guild.roles)
-            await ctx.send('** **')
-            await ctx.send(f'Hey {first_inperson.mention}, your team is up next for judging, so get ready. Please head to the front desk.')
-            await ctx.send(f'Hey {second_inperson.mention}, your team is up next for judging, so get ready. Please head to the front desk.')
-        elif len(inperson_dic) == 1:
-            first_inperson = find(lambda r: r.name == f'{inperson_dic[inperson_dic_list[0]]}', ctx.message.guild.roles)
-            await ctx.send('** **')
-            await ctx.send(f'Hey {first_inperson.mention}, your team is up next for judging, so get ready. Please head to the front desk.')
+        # if len(inperson_dic) >= 3:
+        #     first_inperson = find(lambda r: r.name == f'{inperson_dic[inperson_dic_list[0]]}', ctx.message.guild.roles)
+        #     second_inperson = find(lambda r: r.name == f'{inperson_dic[inperson_dic_list[1]]}', ctx.message.guild.roles)
+        #     # third_inperson = find(lambda r: r.name == f'{inperson_dic[inperson_dic_list[2]]}', ctx.message.guild.roles)
+        #     await ctx.send('** **')
+        #     await ctx.send(f'Hey {first_inperson.mention}, your team is up next for judging, so get ready. Please head to the front desk.')
+        #     await ctx.send(f'Hey {second_inperson.mention}, your team is up next for judging, so get ready. Please head to the front desk.')
+        #     # await ctx.send(f'Hey {third_inperson.mention}, your team is up next for judging, so get ready. Please head to the front desk.')
+        # elif len(inperson_dic) == 2:
+        #     first_inperson = find(lambda r: r.name == f'{inperson_dic[inperson_dic_list[0]]}', ctx.message.guild.roles)
+        #     second_inperson = find(lambda r: r.name == f'{inperson_dic[inperson_dic_list[1]]}', ctx.message.guild.roles)
+        #     await ctx.send('** **')
+        #     await ctx.send(f'Hey {first_inperson.mention}, your team is up next for judging, so get ready. Please head to the front desk.')
+        #     await ctx.send(f'Hey {second_inperson.mention}, your team is up next for judging, so get ready. Please head to the front desk.')
+        # elif len(inperson_dic) == 1:
+        #     first_inperson = find(lambda r: r.name == f'{inperson_dic[inperson_dic_list[0]]}', ctx.message.guild.roles)
+        #     await ctx.send('** **')
+        #     await ctx.send(f'Hey {first_inperson.mention}, your team is up next for judging, so get ready. Please head to the front desk.')
         
-        if len(Servus_dic) >= 1:
-            first_Servus = find(lambda r: r.name == f'{Servus_dic[Servus_dic_list[0]]}', ctx.message.guild.roles)
-            await ctx.send('** **')
-            await ctx.send(f'Hey {first_Servus.mention}, your team is up next for judging for the Servus award, so get ready. Please head to the Servus award judging room. You will automatically be moved')
+        # # if len(Servus_dic) >= 1:
+        # #     first_Servus = find(lambda r: r.name == f'{Servus_dic[Servus_dic_list[0]]}', ctx.message.guild.roles)
+        # #     await ctx.send('** **')
+        # #     await ctx.send(f'Hey {first_Servus.mention}, your team is up next for judging for the Servus award, so get ready. Please head to the Servus award judging room. You will automatically be moved')
 
-        
-
-    return online_dic, inperson_dic, Servus_dic
+    return dic
 
 @bot.command()
 async def move(ctx, channel: discord.VoiceChannel, *members:discord.Member):
@@ -463,60 +476,60 @@ async def nextI(ctx):
 
     return inperson_dic
 
-@bot.command()
-async def nextServus(ctx):
+# @bot.command()
+# async def nextServus(ctx):
 
-    if ctx.message.channel.name == "judging":
+#     if ctx.message.channel.name == "judging":
     
-        # first deletes the command made by the admin
-        await ctx.message.delete()
+#         # first deletes the command made by the admin
+#         await ctx.message.delete()
         
-        await ctx.send('**************************************************************')
-        guild = ctx.guild
-        role = ctx.guild.roles
-        global Servus_dic_list
-        Servus_dic_list = list(Servus_dic)
+#         await ctx.send('**************************************************************')
+#         guild = ctx.guild
+#         role = ctx.guild.roles
+#         global Servus_dic_list
+#         Servus_dic_list = list(Servus_dic)
 
-        await ctx.send('** **')
+#         await ctx.send('** **')
 
-        if len(Servus_dic) == 0:
-            await ctx.send('There are no more teams opted for the Servus award to judge')
+#         if len(Servus_dic) == 0:
+#             await ctx.send('There are no more teams opted for the Servus award to judge')
 
-        elif len(Servus_dic) == 1:
-            next_key = Servus_dic_list[0]
-            role_name = find(lambda r: r.name == f'{Servus_dic[next_key]}', ctx.message.guild.roles)
-            members = role_name.members
+#         elif len(Servus_dic) == 1:
+#             next_key = Servus_dic_list[0]
+#             role_name = find(lambda r: r.name == f'{Servus_dic[next_key]}', ctx.message.guild.roles)
+#             members = role_name.members
             
-            await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you will be transferred to the Servus Award Judging Room')
-            channel = discord.utils.get(guild.voice_channels, name = "Servus Award Judging Room")
-            await move(ctx, channel, members)
-            # removes first item (team) since that team has been judged
-            Servus_dic.pop(next_key)
+#             await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you will be transferred to the Servus Award Judging Room')
+#             channel = discord.utils.get(guild.voice_channels, name = "Servus Award Judging Room")
+#             await move(ctx, channel, members)
+#             # removes first item (team) since that team has been judged
+#             Servus_dic.pop(next_key)
 
-        elif len(Servus_dic) >= 2:
-            next_key = Servus_dic_list[0]
-            upnext_key = Servus_dic_list[1]
-            print()
-            print(next_key)
-            print(upnext_key)
-            role_name = find(lambda r: r.name == f'{Servus_dic[next_key]}', ctx.message.guild.roles)
-            members = role_name.members
+#         elif len(Servus_dic) >= 2:
+#             next_key = Servus_dic_list[0]
+#             upnext_key = Servus_dic_list[1]
+#             print()
+#             print(next_key)
+#             print(upnext_key)
+#             role_name = find(lambda r: r.name == f'{Servus_dic[next_key]}', ctx.message.guild.roles)
+#             members = role_name.members
             
-            await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you will be transferred to the Servus Award Judging Room')
-            channel = discord.utils.get(guild.voice_channels, name = "Servus Award Judging Room")
-            await move(ctx, channel, members)
+#             await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you will be transferred to the Servus Award Judging Room')
+#             channel = discord.utils.get(guild.voice_channels, name = "Servus Award Judging Room")
+#             await move(ctx, channel, members)
 
-            next_role_name = find(lambda r: r.name == f'{Servus_dic[upnext_key]}', ctx.message.guild.roles)
-            await ctx.send(f'Hey {next_role_name.mention}, your team is up next for judging, so get ready. Please head to the Servus Award Waiting Room. You will be transfered to Servus Award Judging Room')
-            # removes first item (team) since that team has been judged
-            Servus_dic.pop(next_key)
-        else:
-            pass
-        print()
-        print(f'whats left: {Servus_dic}')
-        print()
+#             next_role_name = find(lambda r: r.name == f'{Servus_dic[upnext_key]}', ctx.message.guild.roles)
+#             await ctx.send(f'Hey {next_role_name.mention}, your team is up next for judging, so get ready. Please head to the Servus Award Waiting Room. You will be transfered to Servus Award Judging Room')
+#             # removes first item (team) since that team has been judged
+#             Servus_dic.pop(next_key)
+#         else:
+#             pass
+#         print()
+#         print(f'whats left: {Servus_dic}')
+#         print()
 
-    return Servus_dic
+#     return Servus_dic
 
 
 bot.run(TOKEN)
