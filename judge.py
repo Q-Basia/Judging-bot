@@ -62,6 +62,8 @@ async def order(ctx):
         await ctx.send('**This is the list for the teams presenting**')
         # printing the list for admin more nicely
         await channel.send('**This is the list for the teams presenting**')
+        judging_message = ""
+        admin_judging_message = ""
         for order, team in enumerate(teams_str):
             
             # using the string names to find the roles and store them in a list
@@ -81,10 +83,12 @@ async def order(ctx):
                         dic[f'{team}'] = V
                         print(f'{team} : {dic[team]}')
                         # sending the list to the channel
-                        await ctx.send(f'{index}. {team}')
+                        #await ctx.send(f'{index}. {team}')
+                        judging_message += f'{index}. {team}\n'
                         index += 1
                         # printing the list for admin more nicely
-                        await channel.send(f'{team} : {dic[team]}')
+                        #await channel.send(f'{team} : {dic[team]}')
+                        admin_judging_message += f'{team} : {dic[team]}\n'
                         continue
                     elif (inperson in member.roles):
                         INPERSON.append(member.name)   
@@ -99,12 +103,16 @@ async def order(ctx):
                         dic[f'{team}'] = I
                         print(f'{team} : {dic[team]}')
                         # sending the list to the channel
-                        await ctx.send(f'{index}. {team}')
+                        #await ctx.send(f'{index}. {team}')
+                        judging_message += f'{index}. {team}\n'
                         index += 1
                         # printing the list for admin more nicely
-                        await channel.send(f'{team} : {dic[team]}')                        
+                        #await channel.send(f'{team} : {dic[team]}')
+                        admin_judging_message += f'{team} : {dic[team]}\n'                        
                         continue            
 
+        await ctx.send(judging_message)
+        await channel.send(admin_judging_message)
         await ctx.send('** **')
         print(dic)
 
