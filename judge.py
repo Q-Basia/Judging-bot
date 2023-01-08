@@ -268,7 +268,7 @@ async def move(ctx, channel: discord.VoiceChannel, *members:discord.Member):
 
 
 @bot.command()
-async def nextO1(ctx):
+async def next1(ctx):
 
     if ctx.message.channel.name == "judging":
     
@@ -278,48 +278,61 @@ async def nextO1(ctx):
         await ctx.send('**************************************************************')
         guild = ctx.guild
         role = ctx.guild.roles
-        global online_dic_list
-        online_dic_list = list(online_dic)
+        global dic_list
+        dic_list = list(dic)
 
         await ctx.send('** **')
-        if len(online_dic) == 0:
-            await ctx.send('There are no more teams to judge online')
+        if len(dic) == 0:
+            await ctx.send('There are no more teams to judge')
 
-        elif len(online_dic) == 1:
-            next_key = online_dic_list[0]
-            role_name = find(lambda r: r.name == f'{online_dic[next_key]}', ctx.message.guild.roles)
-            members = role_name.members
-            
-            await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you will be transferred to the Judging Room Channel 1')
-            channel = discord.utils.get(guild.voice_channels, name = "Judging Room 1")
-            await move(ctx, channel, members)
+        elif len(dic) >= 1:
+            current_key = dic_list[0]
+            next_key = dic_list[1]
+            role_name = find(lambda r: r.name == f'{current_key}', ctx.message.guild.roles)
+            next_role_name = find(lambda r: r.name == f'{next_key}', ctx.message.guild.roles)
+            judging = get(ctx.guild.roles, name = 'Judgable1')
+
+            # checking if the team is online or inperson
+            if dic[current_key] == I:
+                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, Please head to Room 1. The Organizers at the front desk will be happy to guide where it is if you need help locating the room. You have 3 minutes to get there before you are skipped over.')
+                await ctx.send(f'{next_role_name.mention} please get ready.')
+            elif dic[current_key] == V:
+                members = role_name.members
+                for member in members:
+                    await member.add_roles(judging)
+                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 1. The judges will wait up till two minutes, if you are not in online room by then you will NOT be judged and the next team will be called, thus disqualifying you. {next_role_name.mention} please get ready')
+
+                # await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you will be transferred to the Judging Room Channel 1')
+                # channel = discord.utils.get(guild.voice_channels, name = "Judging Room 1")
+                # await move(ctx, channel, members)
+
             # removes first item (team) since that team has been judged
-            online_dic.pop(next_key)
+            dic.pop(current_key)
 
-        elif len(online_dic) >= 2:
-            next_key = online_dic_list[0]
-            upnext_key = online_dic_list[1]
-            print()
-            print(next_key)
-            print(upnext_key)
-            role_name = find(lambda r: r.name == f'{online_dic[next_key]}', ctx.message.guild.roles)
-            members = role_name.members
+        # elif len(online_dic) >= 2:
+        #     next_key = online_dic_list[0]
+        #     upnext_key = online_dic_list[1]
+        #     print()
+        #     print(next_key)
+        #     print(upnext_key)
+        #     role_name = find(lambda r: r.name == f'{online_dic[next_key]}', ctx.message.guild.roles)
+        #     members = role_name.members
             
-            await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you will be transferred to the Judging Room Channel 1')
-            channel = discord.utils.get(guild.voice_channels, name = "Judging Room 1")
-            await move(ctx, channel, members)
+        #     await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you will be transferred to the Judging Room Channel 1')
+        #     channel = discord.utils.get(guild.voice_channels, name = "Judging Room 1")
+        #     await move(ctx, channel, members)
 
-            next_role_name = find(lambda r: r.name == f'{online_dic[upnext_key]}', ctx.message.guild.roles)
-            await ctx.send(f'Hey {next_role_name.mention}, your team is up next for judging, so get ready. Please head to the Judging Waiting Room voice channel 1. You will be transfered to the next available Judging room')
-            # removes first item (team) since that team has been judged
-            online_dic.pop(next_key)
+        #     next_role_name = find(lambda r: r.name == f'{online_dic[upnext_key]}', ctx.message.guild.roles)
+        #     await ctx.send(f'Hey {next_role_name.mention}, your team is up next for judging, so get ready. Please head to the Judging Waiting Room voice channel 1. You will be transfered to the next available Judging room')
+        #     # removes first item (team) since that team has been judged
+        #     online_dic.pop(next_key)
         else:
             pass
         print()
-        print(f'whats left: {online_dic}')
+        print(f'whats left: {dic}')
         print()
 
-    return online_dic
+    return dic
     
 
 @bot.command()
