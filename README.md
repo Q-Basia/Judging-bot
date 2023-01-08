@@ -1,27 +1,16 @@
 # Judging-bot
 
-This bot was created for HACKED 2023 to help the admin run the judging more smoothly.
+This bot was created and utilized in the 2023 HackED hackathon hosted by the Computer Engineering Club at the University Of Alberta.
 
-Based on what the teams wanted, the teams could choose whther to present their project either in person or online and the bot would arrange the teams into two groups, 
-in-person and online
+It was utilized during the judging period of the 24 event by by judges and organizers to make the judging experience smooth and fast. I created this bot because the last hackathon I organized, HackED Beta, we were very disorganized and stressed during the judging period as some of the approximately 200 students would not answer us or would opt out of judging last second. How much more stressful would it be to handle a hackathopn with over 500 participants?
 
-This bot has 3 main functions:
-- order()
-- nextO()
-- nextI()
+So to solve my problem, I created this bot to help order all the participants that have opted their project for judging and call the next person with different commands. I made it so that the using one list, didferent grups of judges can call the next person in line when they are available, which make the judging faster. 
+In the case of this hybrid hackathon, I built it so that participants have the option to present their projects either in-person or online. 
 
-order():
-This function is to display all the teams who have decided to enter their projects for judging and order them so that the teams know when they are up next. It returns 
-a dictionary that will be used by the other functions. It is only called once.
+To use this bot succesfully, the server requires having 2 roles:
+online
+in-person
 
-nextO():
-This function uses the dictionary and uses it to find out who is next in line. It calls the next team who is up next in the online category and tell the next team in 
-line to get ready. Then it removes the team that was judged from the dictionary and returns the dictionary.
-
-For the purpose and nature of the event, to make the judging faster, there are two duplicates of this function. So the dictionary is used by all thre functions and is 
-updated everytime one iof the functions is called so that no team is called twice (reason for popping of the team when it has been called for judging)
-
-nextI():
-This function is to call the next team who is up next in the inperson category and tell the next team in line to get ready
+To have your own bot use this code follow the discord developer panel info on how to create a bot. Please note you will need to replace the TOKEN value with your bots unique token.
 
 
