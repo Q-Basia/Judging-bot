@@ -147,7 +147,7 @@ async def next1(ctx):
                 members = role_name.members
                 for member in members:
                     await member.add_roles(judging)
-                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 1. The judges will wait up until two minutes, if you are not in the online room by then you will NOT be judged and the next team will be called.')
+                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 1. The judges will wait up up till two minutes, if you are not in the online room by then you will NOT be judged and the next team will be called.')
             
             # removes first item (team) since that team has been judged
             dic.pop(current_key)
@@ -167,7 +167,7 @@ async def next1(ctx):
                 members = role_name.members
                 for member in members:
                     await member.add_roles(judging)
-                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 1. The judges will wait until two minutes, if you are not in the online room by then you will NOT be judged and the next team will be called.')
+                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 1. The judges will wait up till two minutes, if you are not in the online room by then you will NOT be judged and the next team will be called.')
                 await ctx.send(f'{next_role_name.mention} please get ready')
 
             # removes first item (team) since that team has been judged
@@ -225,7 +225,7 @@ async def next2(ctx):
                 members = role_name.members
                 for member in members:
                     await member.add_roles(judging)
-                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 2. The judges will wait until two minutes, if you are not in the online room by then you will NOT be judged and the next team will be called.')
+                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 2. The judges will wait up till two minutes, if you are not in the online room by then you will NOT be judged and the next team will be called.')
 
             # removes first item (team) since that team has been judged
             dic.pop(current_key)
@@ -245,7 +245,7 @@ async def next2(ctx):
                 members = role_name.members
                 for member in members:
                     await member.add_roles(judging)
-                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 2. The judges will wait until two minutes, if you are not in the online room by then you will NOT be judged and the next team will be called.')
+                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 2. The judges will wait up till two minutes, if you are not in the online room by then you will NOT be judged and the next team will be called.')
                 await ctx.send(f'{next_role_name.mention} please get ready')
 
             # removes first item (team) since that team has been judged
@@ -297,7 +297,7 @@ async def next3(ctx):
                 members = role_name.members
                 for member in members:
                     await member.add_roles(judging)
-                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 3. The judges will wait until two minutes, if you are not in the online room by then you will NOT be judged and the next team will be called.')
+                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 3. The judges will wait up till two minutes, if you are not in the online room by then you will NOT be judged and the next team will be called.')
 
             # removes first item (team) since that team has been judged
             dic.pop(current_key)
@@ -317,7 +317,7 @@ async def next3(ctx):
                 members = role_name.members
                 for member in members:
                     await member.add_roles(judging)
-                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 3. The judges will wait until two minutes, if you are not in the online room by then you will NOT be judged and the next team will be called.')
+                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 3. The judges will wait up till two minutes, if you are not in the online room by then you will NOT be judged and the next team will be called.')
                 await ctx.send(f'{next_role_name.mention} please get ready.')
 
             # removes first item (team) since that team has been judged
@@ -368,7 +368,7 @@ async def next4(ctx):
                 members = role_name.members
                 for member in members:
                     await member.add_roles(judging)
-                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 4. The judges will wait until two minutes, if you are not in the online room by then you will NOT be judged and the next team will be called.')
+                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 4. The judges will wait up till two minutes, if you are not in the online room by then you will NOT be judged and the next team will be called.')
 
             # removes first item (team) since that team has been judged
             dic.pop(current_key)
@@ -388,7 +388,7 @@ async def next4(ctx):
                 members = role_name.members
                 for member in members:
                     await member.add_roles(judging)
-                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 4. The judges will wait until two minutes, if you are not in the online room by then you will NOT be judged and the next team will be called.')
+                await ctx.send(f'Hey {role_name.mention}, your team will be judged now, you have been given the judgable role so now please head over to Judging Room 4. The judges will wait up till two minutes, if you are not in the online room by then you will NOT be judged and the next team will be called.')
                 await ctx.send(f'{next_role_name.mention} please get ready.')
 
             # removes first item (team) since that team has been judged
