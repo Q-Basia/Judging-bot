@@ -144,9 +144,12 @@ async def next1(ctx):
         dic_list = list(dic)
 
         await ctx.send('** **')
+
+        # if there are no more items in the dictionary
         if len(dic) == 0:
             await ctx.send('There are no more teams to judge')
 
+        # if there is one item in the dictionary
         elif len(dic) == 1:
             current_key = dic_list[0]
             role_name = find(lambda r: r.name == f'{current_key}', ctx.message.guild.roles)
@@ -164,6 +167,7 @@ async def next1(ctx):
             # removes first item (team) since that team has been judged
             dic.pop(current_key)
 
+        # if there are more than two items in the dictionary
         elif len(dic) >= 2:
             current_key = dic_list[0]
             next_key = dic_list[1]
@@ -222,9 +226,12 @@ async def next2(ctx):
         dic_list = list(dic)
 
         await ctx.send('** **')
+
+        # if there are no more items in the dictionary
         if len(dic) == 0:
             await ctx.send('There are no more teams to judge')
 
+        # if there is one item in the dictionary
         elif len(dic) == 1:
             current_key = dic_list[0]
             role_name = find(lambda r: r.name == f'{current_key}', ctx.message.guild.roles)
@@ -242,6 +249,7 @@ async def next2(ctx):
             # removes first item (team) since that team has been judged
             dic.pop(current_key)
 
+        # if there are more than two items in the dictionary
         elif len(dic) >= 2:
             current_key = dic_list[0]
             next_key = dic_list[1]
@@ -294,9 +302,12 @@ async def next3(ctx):
         dic_list = list(dic)
 
         await ctx.send('** **')
+
+        # if there are no more items in the dictionary
         if len(dic) == 0:
             await ctx.send('There are no more teams to judge')
 
+        # if there is one item in the dictionary
         elif len(dic) == 1:
             current_key = dic_list[0]
             role_name = find(lambda r: r.name == f'{current_key}', ctx.message.guild.roles)
@@ -314,6 +325,7 @@ async def next3(ctx):
             # removes first item (team) since that team has been judged
             dic.pop(current_key)
 
+        # if there are more than two items in the dictionary
         elif len(dic) >= 2:
             current_key = dic_list[0]
             next_key = dic_list[1]
@@ -365,9 +377,12 @@ async def next4(ctx):
         dic_list = list(dic)
 
         await ctx.send('** **')
+
+        # if there are no more items in the dictionary
         if len(dic) == 0:
             await ctx.send('There are no more teams to judge')
 
+        # if there is one item in the dictionary
         elif len(dic) == 1:
             current_key = dic_list[0]
             role_name = find(lambda r: r.name == f'{current_key}', ctx.message.guild.roles)
@@ -385,6 +400,7 @@ async def next4(ctx):
             # removes first item (team) since that team has been judged
             dic.pop(current_key)
 
+        # if there are more than two items in the dictionary
         elif len(dic) >= 2:
             current_key = dic_list[0]
             next_key = dic_list[1]
