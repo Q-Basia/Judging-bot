@@ -80,16 +80,20 @@ async def order(ctx):
                     # checks if member is online
                     if (online in member.roles):
                         ONLINE.append(member.name)
-                        dic[f'{team}'] = V
-                        print(f'{team} : {dic[team]}')
-                        # sending the list to the channel
-                        #await ctx.send(f'{index}. {team}')
-                        judging_message += f'{index}. {team}\n'
-                        index += 1
-                        # printing the list for admin more nicely
-                        #await channel.send(f'{team} : {dic[team]}')
-                        admin_judging_message += f'{team} : {dic[team]}\n'
-                        continue
+                        # to check if the team has already beeen added to the list
+                        if team in dic.keys():
+                            continue
+                        else:
+                            dic[f'{team}'] = V
+                            print(f'{team} : {dic[team]}')
+                            # sending the list to the channel
+                            #await ctx.send(f'{index}. {team}')
+                            judging_message += f'{index}. {team}\n'
+                            index += 1
+                            # printing the list for admin more nicely
+                            #await channel.send(f'{team} : {dic[team]}')
+                            admin_judging_message += f'{team} : {dic[team]}\n'
+                            continue
                     elif (inperson in member.roles):
                         INPERSON.append(member.name)   
                     else:
